@@ -1,0 +1,67 @@
+﻿<mujoco model="example">
+  <compiler coordinate="global"/>
+
+  <default>
+    <geom rgba=".8 .6 .4 1"/>
+  </default>
+
+  <asset>
+    <texture type="skybox" builtin="gradient" rgb1="1 1 1" rgb2=".6 .8 1" width="256" height="256"/>
+  </asset>
+
+  <worldbody>
+    <light pos="0 1 1" dir="0 -1 -1" diffuse="1 1 1"/>
+    
+    <body>
+    <geom type="cylinder" fromto="0 0 1.7918  0 0 1.7618" size="1.2032592"/>
+    <site name="b1" pos="-1.0757 0.53925 1.7618" size="0.02"/>
+    <site name="b2" pos="1.0622 -0.56526 1.7618" size="0.02"/>
+    <site name="b3" pos="0.56083 1.0646 1.7618" size="0.02"/>
+    <site name="b4" pos="-0.54373 -1.0734 1.7618" size="0.02"/>
+      <geom type="capsule" fromto="0 0 1.7618  0.0012361 -0.011761 0.68159" size="0.06"/>
+      <joint type="hinge" pos="0.00000 0.00000 1.7618" axis="0 1 0"/>
+      <body>
+        <geom type="capsule" fromto="0.0012361 -0.011761 0.68159 0.029332 -0.0019520 0.64292" size="0.04"/>
+        <joint type="hinge" pos="0.0012361 -0.011761 0.68159" axis="-0.102940441036437 0.979412873099072 0.173648177666930"/>
+        
+          <body>
+          <geom type="capsule" fromto="0.029332 -0.0019520 0.64292 0 0 0.02" size="0.06"/>
+          <joint type="hinge" pos="0.029332 -0.0019520 0.64292" axis="0.6947138315421153 0.3907311284892736 0.603905520337057"/>
+          <geom type="cylinder" fromto="0 0 0 0 0 -0.04" size="0.925584"/> 
+          <site name="p1" pos="-0.82894 0.41179 0" size="0.02"/>
+          <site name="p2" pos="0.81550 -0.43779 0" size="0.02"/>
+          <site name="p3" pos="0.43337 0.81786 0" size="0.02"/>
+          <site name="p4" pos="-0.41627 -0.82670 0" size="0.02"/>
+          <site name="end1" pos="0 0 0" type="sphere" size="0.01"/>
+          </body>
+        
+      </body>
+    </body>
+    <body>
+      <geom type="cylinder" fromto="0.5 0 0.2  0.5 0 0" size="0.07"/>
+      <joint type="free"/>
+    </body>
+  </worldbody>
+
+  <tendon>
+    <spatial limited="true" range="0 1.7835" width="0.005">
+      <site site="b1"/>
+      <site site="p1"/>
+    </spatial>
+   
+    <spatial limited="true" range="0 1.7835" width="0.005">
+      <site site="b2"/>
+      <site site="p2"/>
+    </spatial>
+ 
+    <spatial limited="true" range="0 1.7835" width="0.005">
+      <site site="b3"/>
+      <site site="p3"/>
+    </spatial>
+  
+    <spatial limited="true" range="0 1.7835" width="0.005">
+      <site site="b3"/>
+      <site site="p3"/>
+    </spatial>
+  </tendon>
+</mujoco>

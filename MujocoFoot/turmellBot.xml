@@ -1,0 +1,68 @@
+﻿<mujoco model="turmellbot">
+  <compiler coordinate="global"/>
+  <default>
+    <geom rgba=".8 .6 .4 1"/>
+  </default>
+  <asset>
+    <texture type="skybox" builtin="gradient" rgb1="1 1 1" rgb2=".6 .8 1" width="256" height="256"/>
+    <mesh file="a-foot.stl" refpos="-1.1187 -0.00794 -1.7909" />
+  </asset>
+  <worldbody>
+    <light pos="1 -1 5" dir="-1 1 -5" diffuse="1 1 1"/>
+    <site name="reference" pos="0 0 1.7618"/>
+    <body>
+     <geom name="base" type="cylinder" fromto="-0.040969815198164714 0 1.762734815198164 -0.00096982 0 1.7627" size="1.2032592"/>
+     <site name="b1" pos="-0.00096982 0.67506 0.76668" size="0.02"/>
+     <site name="b2" pos="-0.00096982 -0.67506 2.7588" size="0.02"/>
+     <site name="b3" pos="-0.00096982 0.99605 2.4378" size="0.02"/>
+     <site name="b4" pos="-0.00096982 -0.99605 1.0877" size="0.02"/>
+      <geom name="leg" type="capsule" fromto="-0.00096982 0 1.7627 1.0835 -0.0012686 1.7629" size="0.03"/>
+      <site name="shnk" pos="1.0835 -0.0012686 1.7629"/>
+      <body>
+        <geom name="comp" type="capsule" fromto="1.0835 -0.0012686 1.7629 1.1187 0.00794 1.7909" size="0.03"/>
+        <joint name="TC" type="hinge" pos="1.0835 -0.0012686 1.7629" axis="-0.174 0.97900 -0.103" limited="true" range="-20 20"/>
+          <body>
+           <geom name="b-foot" type="capsule" fromto="1.1187 0.00794 1.7909 1.7608 0 1.7627" size="0.03"/>
+           <joint name="ST" type="hinge" pos="1.1187 0.00794 1.7909" axis="-0.642 0.208 0.738" limited="true" range="-15 15"/>
+           <geom name="ptfm" type="cylinder" fromto="1.7608 0 1.7627 1.8008 0 1.7627" size="0.925584"/> 
+           <geom name="s-foot" type="mesh" mesh="a-foot" rgba=".85 .79 .72 0.7"/>
+           <site name="p1" pos="1.7608 0.51928 0.99654" size="0.02"/>
+           <site name="p2" pos="1.7608 -0.51928 2.5289" size="0.02"/>
+           <site name="p3" pos="1.7608 0.7662 2.2820" size="0.02"/>
+           <site name="p4" pos="1.7608 -0.7662 1.2435" size="0.02"/>
+          </body>
+      </body>
+    </body>
+  </worldbody>
+  <tendon>
+    <spatial name="t1" limited="true" range="1.78349 1.7835" width="0.005" stiffness="0" damping="10000">
+      <site site="b1"/>
+      <site site="p1"/>
+    </spatial>
+    <spatial name="t2"  limited="true" range="1.78349 1.7835" width="0.005" stiffness="0" damping="10000">
+      <site site="b2"/>
+      <site site="p2"/>
+    </spatial>
+    <spatial name="t3" limited="true" range="1.78349 1.7835" width="0.005" stiffness="0" damping="10000">
+      <site site="b3"/>
+      <site site="p3"/>
+    </spatial>
+    <spatial name="t4"  limited="true" range="1.78349 1.7835" width="0.005" stiffness="0" damping="10000">
+      <site site="b4"/>
+      <site site="p4"/>
+    </spatial>
+  </tendon>
+  <actuator>
+    <muscle name="t1" tendon="t1"/>
+    <muscle name="t2" tendon="t2"/>
+    <muscle name="t3" tendon="t3"/>
+    <muscle name="t4" tendon="t4"/>
+  </actuator>
+  <sensor>
+   <framepos name ="pptfm" objtype="geom" objname="ptfm"/>
+   <actuatorfrc name="t1frc" actuator="t1"/>
+   <actuatorfrc name="t2frc" actuator="t2"/>
+   <actuatorfrc name="t3frc" actuator="t3"/>
+   <actuatorfrc name="t4frc" actuator="t4"/>
+  </sensor>
+</mujoco>
