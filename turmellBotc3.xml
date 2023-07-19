@@ -1,0 +1,72 @@
+﻿<mujoco model="turmellbot">
+  <compiler coordinate="global"/>
+  <default>
+    <geom rgba=".8 .6 .4 1"/>
+  </default>
+  <asset>
+    <texture type="skybox" builtin="gradient" rgb1="1 1 1" rgb2=".6 .8 1" width="256" height="256"/>
+    <mesh file="a-foot.stl" refpos="-10.84427 0.1037934 -17.62868" />
+  </asset>
+  <worldbody>
+    <light pos="10 -10 50" dir="-10 10 -50" diffuse="1 1 1"/>
+    <site name="reference" pos="5.938405e-19 -0.09110710 17.62735"/>
+    <body>
+     <geom name="base" type="cylinder" fromto="-0.4000000 -0.09110710 17.62735 5.938405e-19 -0.09110710 17.62735" size="12.032592"/>
+     <site name="b1" pos="-6.093131e-16 6.659522 7.666812" size="0.2"/>
+     <site name="b2" pos="6.105008e-16 -6.841736 27.58788" size="0.2"/>
+     <site name="b3" pos="4.139506e-16 9.869429 24.37798" size="0.2"/>
+     <site name="b4" pos="-4.127630e-16 -10.05164 10.87672" size="0.2"/>
+      <geom name="leg" type="capsule" fromto="5.938405e-19 -0.09110710 17.62735 10.84427 -0.1037934 17.62868" size="0.3"/>
+      <site name="shnk" pos="10.84427 -0.1037934 17.62868"/>
+      <body>
+        <geom name="comp" type="capsule" fromto="10.84427 -0.1037934 17.62868 11.19642 -0.01170672 17.90907" size="0.3"/>
+        <joint name="TC" type="hinge" pos="10.84427 -0.1037934 17.62868" axis="-0.1740000 0.9790000 -0.1030000" limited="true" range="-20 20"/>
+          <body>
+           <geom name="b-foot" type="capsule" fromto="11.19642 -0.01170672 17.90907 17.61765 -0.09110710 17.62735" size="0.3"/>
+           <joint name="ST" type="hinge" pos="11.19642 -0.01170672 17.90907" axis="-0.6420000 0.2080000 0.7380000" limited="true" range="-15 15"/>
+           <geom name="ptfm" type="cylinder" fromto="17.61765 -0.09110710 17.627 18.01765 -0.09110710 17.62735" size="9.25584"/> 
+           <site name="ptfmc" pos="18.01765 -0.09110710 17.62735" size="0.3"/>
+           <geom name="s-foot" type="mesh" mesh="a-foot" rgba=".85 .79 .72 0.7" density="0.01"/>
+           <site name="p1" pos="17.61765 5.101684 9.965397" size="0.2"/>
+           <site name="p2" pos="17.61765 -5.283899 25.28930" size="0.2"/>
+           <site name="p3" pos="17.61765 7.570844 22.82014" size="0.2"/>
+           <site name="p4" pos="17.61765 -7.753058 12.43456" size="0.2"/>
+          </body>
+      </body>
+    </body>
+  </worldbody>
+  <tendon>
+    <spatial name="t1" limited="true" range="19.0048 19.0058" width="0.05" stiffness="100" damping="100000">
+      <site site="b1"/>
+      <site site="p1"/>
+    </spatial>
+    <spatial name="t2"  limited="true" range="16.2618 16.2628" width="0.05" stiffness="100" damping="100000">
+      <site site="b2"/>
+      <site site="p2"/>
+    </spatial>
+    <spatial name="t3" limited="true" range="14.3564 14.3574" width="0.05" stiffness="100" damping="100000">
+      <site site="b3"/>
+      <site site="p3"/>
+    </spatial>
+    <spatial name="t4"  limited="true" range="20.9696 20.9706" width="0.05" stiffness="100" damping="100000">
+      <site site="b4"/>
+      <site site="p4"/>
+    </spatial>
+  </tendon>
+  <actuator>
+    <muscle name="t1" tendon="t1"/>
+    <muscle name="t2" tendon="t2"/>
+    <muscle name="t3" tendon="t3"/>
+    <muscle name="t4" tendon="t4"/>
+  </actuator>
+  <sensor>
+    <accelerometer name="ptfacc" site="ptfmc"/>
+    <gyro name="ptfgyro" site="ptfmc"/>
+    <tendonpos name="t1pos" tendon="t1"/>
+    <tendonpos name="t2pos" tendon="t2"/>
+    <tendonpos name="t3pos" tendon="t3"/>
+    <tendonpos name="t4pos" tendon="t4"/>
+    <jointpos name="TCpos" joint="ST"/>
+    <jointpos name="STpos" joint="TC"/>
+  </sensor>
+</mujoco>
